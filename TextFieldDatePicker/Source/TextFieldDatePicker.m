@@ -55,6 +55,19 @@
     return CGRectZero;
 }
 
+- (void)layoutSubviews
+{
+	[super layoutSubviews];
+	
+	if ([self.popoverController isPopoverVisible])
+	{
+		[self.popoverController presentPopoverFromRect:self.frame
+												inView:self.superview
+							  permittedArrowDirections:UIPopoverArrowDirectionAny
+											  animated:YES];
+	}
+}
+
 #pragma mark - UITextField Notification -
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
