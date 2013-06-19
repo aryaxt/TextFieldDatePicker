@@ -16,6 +16,9 @@
                                 <rect key="frame" x="255" y="298" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="datePickerDelegate" destination="2" id="rCO-fs-az2"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -28,9 +31,15 @@
     <classes>
         <class className="TextFieldDatePicker" superclassName="UITextField">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TextFieldDatePicker.h"/>
+            <relationships>
+                <relationship kind="outlet" name="datePickerDelegate"/>
+            </relationships>
         </class>
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="textFieldDatePicker" candidateClass="TextFieldDatePicker"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

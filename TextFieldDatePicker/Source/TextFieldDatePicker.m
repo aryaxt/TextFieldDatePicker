@@ -64,6 +64,8 @@
 {
 	self.date = date;
 	[self.popoverController dismissPopoverAnimated:YES];
+	
+	[self.datePickerDelegate textFieldDatePicker:self didSelectDate:date];
 }
 
 #pragma mark - Private Methods -

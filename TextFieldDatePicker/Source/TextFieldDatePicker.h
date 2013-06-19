@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "DatePickerViewController.h"
 
+@class TextFieldDatePicker;
+@protocol TextFieldDatePickerDelegate <UITextFieldDelegate>
+- (void)textFieldDatePicker:(TextFieldDatePicker *)textFieldDatePicker didSelectDate:(NSDate *)date;
+@end
+
 @interface TextFieldDatePicker : UITextField <UITextFieldDelegate, DatePickerViewControllerDelegate>
 
+@property (nonatomic, weak) IBOutlet id <TextFieldDatePickerDelegate> datePickerDelegate;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSDate *minDate;
 @property (nonatomic, strong) NSDate *maxDate;
