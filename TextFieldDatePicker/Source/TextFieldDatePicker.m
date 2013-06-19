@@ -76,7 +76,9 @@
 - (void)datePickerViewControllerDidSelectDate:(NSDate *)date
 {
 	self.date = date;
+	
 	[self.popoverController dismissPopoverAnimated:YES];
+	[self resignFirstResponder];
 	
 	[self.delegate textFieldDatePicker:self didSelectDate:date];
 }
