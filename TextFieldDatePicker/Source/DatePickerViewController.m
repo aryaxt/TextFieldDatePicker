@@ -22,6 +22,11 @@
 	
 	self.contentSizeForViewInPopover = CGSizeMake(self.calendarView.frame.size.width, self.calendarView.frame.size.height);
 	[self.view addSubview:self.calendarView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
 	
 	if (self.minDate)
 		self.calendarView.minimumDate = self.minDate;
