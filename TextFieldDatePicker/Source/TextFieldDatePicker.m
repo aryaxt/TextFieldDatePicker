@@ -50,6 +50,11 @@
 	[self.dateFormatter setDateFormat:@"MM/dd/yyyy"];
 }
 
+- (CGRect)caretRectForPosition:(UITextPosition *)position
+{
+    return CGRectZero;
+}
+
 #pragma mark - UITextField Notification -
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
