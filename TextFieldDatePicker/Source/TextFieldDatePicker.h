@@ -14,9 +14,9 @@
 - (void)textFieldDatePicker:(TextFieldDatePicker *)textFieldDatePicker didSelectDate:(NSDate *)date;
 @end
 
-@interface TextFieldDatePicker : UITextField <UITextFieldDelegate, DatePickerViewControllerDelegate>
+@interface TextFieldDatePicker : UITextField <DatePickerViewControllerDelegate, UIPopoverControllerDelegate>
 
-@property (nonatomic, weak) IBOutlet id <TextFieldDatePickerDelegate> datePickerDelegate;
+@property (nonatomic, weak) IBOutlet id <TextFieldDatePickerDelegate> delegate;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSDate *minDate;
 @property (nonatomic, strong) NSDate *maxDate;

@@ -37,14 +37,22 @@
 
 - (void)initialize
 {
-	self.delegate = self;
+	UIView *inputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+	inputView.backgroundColor = [UIColor clearColor];
+	self.inputView = inputView;
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(textFieldDidBeginEditing:)
+												 name:UITextFieldTextDidBeginEditingNotification
+											   object:self];
+	
 	self.dateFormatter = [[NSDateFormatter alloc] init];
 	[self.dateFormatter setDateFormat:@"MM/dd/yyyy"];
 }
 
-#pragma mark - UITextFieldDelegate Methods -
+#pragma mark - UITextField Notification -
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+- (void)textFieldDidBeginEditing:(UITextField *)textField
 {
 	self.datePickerViewController.minDate = self.minDate;
 	self.datePickerViewController.maxDate = self.maxDate;
@@ -54,8 +62,13 @@
 											inView:self.superview
 						  permittedArrowDirections:UIPopoverArrowDirectionAny
 										  animated:YES];
-	
-	return NO;
+}
+
+#pragma mark - UIPopoverControllerDelegate Methods -
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+	[self resignFirstResponder];
 }
 
 #pragma mark - DatePickerViewControllerDelegate Methods -
@@ -65,7 +78,7 @@
 	self.date = date;
 	[self.popoverController dismissPopoverAnimated:YES];
 	
-	[self.datePickerDelegate textFieldDatePicker:self didSelectDate:date];
+	[self.delegate textFieldDatePicker:self didSelectDate:date];
 }
 
 #pragma mark - Private Methods -
@@ -88,6 +101,7 @@
 	if (!_popoverController)
 	{
 		_popoverController = [[UIPopoverController alloc] initWithContentViewController:self.datePickerViewController];
+		_popoverController.delegate = self;
 	}
 	
 	return _popoverController;

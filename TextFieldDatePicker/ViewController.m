@@ -27,4 +27,9 @@
 	NSLog(@"%@", date);
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+	NSLog(@"begin editing");
+}
+
 @end
