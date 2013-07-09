@@ -54,7 +54,8 @@
 
 - (void)calendar:(CKCalendarView *)calendar didSelectDate:(NSDate *)date
 {
-	[self.delegate datePickerViewControllerDidSelectDate:date];
+	if (self.delegate && [self.delegate respondsToSelector:@selector(datePickerViewControllerDidSelectDate:)])
+		[self.delegate datePickerViewControllerDidSelectDate:date];
 }
 
 @end
