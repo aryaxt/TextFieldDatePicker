@@ -11,6 +11,7 @@
 #import "CKCalendarView.h"
 
 @protocol DatePickerViewControllerDelegate <NSObject>
+@optional
 - (void)datePickerViewControllerDidSelectDate:(NSDate *)date;
 @end
 
