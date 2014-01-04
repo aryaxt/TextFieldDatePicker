@@ -40,5 +40,6 @@
 @property (nonatomic, strong) NSDate *minDate;
 @property (nonatomic, strong) NSDate *maxDate;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, assign) UIDatePickerMode *datePickerMode;
 
 @end

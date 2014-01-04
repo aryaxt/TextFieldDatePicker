@@ -30,6 +30,7 @@
 @interface TextFieldDatePicker()
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) DatePickerViewController *datePickerViewController;
+@property (nonatomic, strong) UIDatePicker *datePicker;
 @end
 
 @implementation TextFieldDatePicker
@@ -56,9 +57,19 @@
 
 - (void)initialize
 {
-	UIView *inputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-	inputView.backgroundColor = [UIColor clearColor];
-	self.inputView = inputView;
+	self.datePickerMode = UIDatePickerModeDate;
+	
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	{
+		UIView *inputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+		inputView.backgroundColor = [UIColor clearColor];
+		self.inputView = inputView;
+	}
+	else
+	{
+		[self.datePicker addTarget:self action:@selector(datePickerDidChange:) forControlEvents:UIControlEventValueChanged];
+		self.inputView = self.datePicker;
+	}
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(textFieldDidBeginEditing:)
@@ -94,11 +105,27 @@
 	self.datePickerViewController.minDate = self.minDate;
 	self.datePickerViewController.maxDate = self.maxDate;
 	self.datePickerViewController.date = self.date;
+	self.datePicker.date = (self.date) ? self.date : [NSDate date];
+	self.datePicker.minimumDate = self.minDate;
+	self.datePicker.maximumDate = self.maxDate;
 	
 	[self.popoverController presentPopoverFromRect:self.frame
 											inView:self.superview
 						  permittedArrowDirections:UIPopoverArrowDirectionAny
 										  animated:YES];
+	
+	// on iphone we want to automatically select the current selected day on date picker if date is not selected
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+	{
+		self.date = self.datePicker.date;
+	}
+}
+
+#pragma mark - UIDatePicker action -
+
+- (void)datePickerDidChange:(id)sender
+{
+	self.date = self.datePicker.date;
 }
 
 #pragma mark - UIPopoverControllerDelegate Methods -
@@ -137,7 +164,7 @@
 
 - (UIPopoverController *)popoverController
 {
-	if (!_popoverController)
+	if (!_popoverController && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
 		_popoverController = [[UIPopoverController alloc] initWithContentViewController:self.datePickerViewController];
 		_popoverController.delegate = self;
@@ -155,6 +182,17 @@
 	}
 	
 	return _datePickerViewController;
+}
+
+- (UIDatePicker *)datePicker
+{
+	if (!_datePicker)
+	{
+		_datePicker= [[UIDatePicker alloc] init];
+		_datePicker.datePickerMode = self.datePickerMode;
+	}
+	
+	return _datePicker;
 }
 
 @end
